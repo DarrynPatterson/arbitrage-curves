@@ -4,10 +4,19 @@ const Schema = mongoose.Schema;
 // Create Schema
 const ChartSchema = new Schema({
   dateString: {
-    type: "String"
+    type: "Date"
+  },
+  lunoLastPriceUsd: {
+    type: "Date"
+  },
+  cexIoLastPriceUsd: {
+    type: "Date"
   },
   coinDeskLastPriceUsd: {
-    type: "String"
+    type: "Date"
+  },
+  krakenLastPriceUsd: {
+    type: "Date"
   }
 });
 

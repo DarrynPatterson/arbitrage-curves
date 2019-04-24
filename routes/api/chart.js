@@ -6,32 +6,21 @@ const auth = require("../../middleware/auth");
 const Chart = require("../../models/Chart");
 
 // @route   GET api/chart
-// @desc    Get chart
+// @desc    Get chart data
 // @access  Public
 router.get("/", (req, res) => {
-  const mockData = [
-    {
-      dateString: "2019-04-22 09:55:00",
-      coinDeskLastPriceUsd: "5305"
-    },
-    {
-      dateString: "2019-04-22 10:00:00",
-      coinDeskLastPriceUsd: "5310"
-    }
-  ];
+  Chart.find({})
+    .select({})
+    .limit(1000)
+    .sort("-dateString")
+    .then(items => {
+      if (!items) return res.status(400).json({ msg: "Chart data not found" });
 
-  // Chart.find({})
-  //      .limit(30)
-  //      .then(items => {
-  //        if(!items) return res.status(400).json({ msg: 'Chart data does not exist' });
-
-  //        res.json(items);
-  //   })
-  //   .catch(err => {
-  //     console.error(err)
-  //   });
-
-  res.json(mockData);
+      res.json(items);
+    })
+    .catch(err => {
+      console.error(err);
+    });
 });
 
 module.exports = router;

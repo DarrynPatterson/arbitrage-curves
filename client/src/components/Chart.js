@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Container } from "reactstrap";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { connect } from "react-redux";
@@ -17,15 +16,13 @@ class Chart extends Component {
 
   render() {
     return (
-      <Container>
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={{
-            title: "Price",
-            series: [{ name: "Price Series", data: this.props.chart.items }]
-          }}
-        />
-      </Container>
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={{
+          title: "Price",
+          series: this.props.chart.items
+        }}
+      />
     );
   }
 }
