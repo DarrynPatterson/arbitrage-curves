@@ -8,7 +8,6 @@ import {
   FormGroup,
   Label,
   Input,
-  NavLink,
   Alert
 } from "reactstrap";
 import { connect } from "react-redux";
@@ -17,6 +16,7 @@ import { register } from "../../actions/authActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class RegisterModal extends Component {
+
   state = {
     modal: false,
     name: "",
@@ -81,13 +81,13 @@ class RegisterModal extends Component {
 
   render() {
     return (
-      <div>
-        <NavLink onClick={this.toggle} href="#">
-          Register
-        </NavLink>
+      <>
+        <a onClick={this.toggle} href="#" className="btn btn-danger btn-icon-split ml-2">
+          <span className="text">Sign Up</span>
+        </a>
 
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Register</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
           <ModalBody>
             {this.state.msg ? (
               <Alert color="danger">{this.state.msg}</Alert>
@@ -101,8 +101,7 @@ class RegisterModal extends Component {
                   id="name"
                   placeholder="Name"
                   className="mb-3"
-                  onChange={this.onChange}
-                />
+                  onChange={this.onChange} />
 
                 <Label for="email">Email</Label>
                 <Input
@@ -111,8 +110,7 @@ class RegisterModal extends Component {
                   id="email"
                   placeholder="Email"
                   className="mb-3"
-                  onChange={this.onChange}
-                />
+                  onChange={this.onChange} />
 
                 <Label for="password">Password</Label>
                 <Input
@@ -121,16 +119,15 @@ class RegisterModal extends Component {
                   id="password"
                   placeholder="Password"
                   className="mb-3"
-                  onChange={this.onChange}
-                />
+                  onChange={this.onChange} />
                 <Button color="dark" style={{ marginTop: "2rem" }} block>
-                  Register
+                Sign Up
                 </Button>
               </FormGroup>
             </Form>
           </ModalBody>
         </Modal>
-      </div>
+      </>
     );
   }
 }

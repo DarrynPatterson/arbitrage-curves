@@ -33,7 +33,7 @@ class AppNavbar extends Component {
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
-      <Fragment>
+      <>
         <NavItem>
           <span className="navbar-text mr-3">
             <strong>{user ? `Welcome ${user.name}` : ""}</strong>
@@ -42,18 +42,18 @@ class AppNavbar extends Component {
         <NavItem>
           <Logout />
         </NavItem>
-      </Fragment>
+      </>
     );
 
     const guestLinks = (
-      <Fragment>
+      <>
         <NavItem>
           <RegisterModal />
         </NavItem>
         <NavItem>
           <LoginModal />
         </NavItem>
-      </Fragment>
+      </>
     );
 
     return (

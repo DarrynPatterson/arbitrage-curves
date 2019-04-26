@@ -9,10 +9,9 @@ const Chart = require("../../models/Chart");
 // @desc    Get chart data
 // @access  Public
 router.get("/", (req, res) => {
-  Chart.find({})
+  const startDate = Date.parse("2019-04-26");
+  Chart.find({ dateUtc: { $gt: startDate } })
     .select({})
-    .limit(1000)
-    .sort("-dateString")
     .then(items => {
       if (!items) return res.status(400).json({ msg: "Chart data not found" });
 
