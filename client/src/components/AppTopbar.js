@@ -15,11 +15,21 @@ class AppTopbar extends Component {
   };
 
   render() {
-    const { isAuthenticated } = this.props.auth;
+    const { isAuthenticated, user } = this.props.auth;
 
     const authContent = (
       <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-        <div className="d-sm-inline-block text-right" style={{ width: '100%' }}>
+        <div className="d-sm-inline-block text-right" style={{ width: "100%" }}>
+          {(() => {
+            if (user) {
+              return (
+                <span className="mr-2 d-none d-lg-inline text-gray-600 small">
+                  {user.name}
+                </span>
+              );
+            }
+          })()}
+
           <Logout />
         </div>
       </nav>
@@ -27,7 +37,7 @@ class AppTopbar extends Component {
 
     const guestContent = (
       <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-        <div className="d-sm-inline-block text-right" style={{ width: '100%' }}>
+        <div className="d-sm-inline-block text-right" style={{ width: "100%" }}>
           <LoginModal />
           <RegisterModal />
         </div>

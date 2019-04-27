@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Chart from "./Chart";
+import SpotPrice from "./SpotPrice";
 
 class ContentArea extends Component {
   state = {
@@ -22,7 +23,9 @@ class ContentArea extends Component {
     );
 
     const guestContent = (
-      <div>Guest Content</div>
+      <>
+        <SpotPrice />
+      </>
     );
 
     return <div>{isAuthenticated ? authContent : guestContent}</div>;
