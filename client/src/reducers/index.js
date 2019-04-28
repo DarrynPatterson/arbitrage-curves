@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
-import chartReducer from "./chartReducer";
+import arbChartReducer from "./arbChartReducer";
 import errorReducer from "./errorReducer";
 import authReducer from "./authReducer";
 import spotPriceReducer from "./spotPriceReducer";
+import sidebarReducer from "./sidebarReducer";
 
 export default combineReducers({
-  chart: chartReducer,
+  arbChart: arbChartReducer,
   error: errorReducer,
   auth: authReducer,
-  spotPrices: spotPriceReducer
+  spotPrices: spotPriceReducer,
+  sidebar: sidebarReducer
 });

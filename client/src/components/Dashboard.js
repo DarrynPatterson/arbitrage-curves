@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import Chart from "./Chart";
+import ArbChart from "./ArbChart";
 import SpotPrice from "./SpotPrice";
 
-class ContentArea extends Component {
+class Dashboard extends Component {
   state = {
     isOpen: false
   };
@@ -19,7 +19,7 @@ class ContentArea extends Component {
     const authContent = (
       <>
         <SpotPrice />
-        <Chart />
+        <ArbChart />
       </>
     );
 
@@ -40,4 +40,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   null
-)(ContentArea);
+)(Dashboard);

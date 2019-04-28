@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import RegisterModal from "./auth/RegisterModal";
-import LoginModal from "./auth/LoginModal";
-import Logout from "./auth/Logout";
+import RegisterModal from "../auth/RegisterModal";
+import LoginModal from "../auth/LoginModal";
+import Logout from "../auth/Logout";
 
-class AppTopbar extends Component {
+class Topbar extends Component {
   state = {
     isOpen: false
   };
@@ -55,4 +55,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   null
-)(AppTopbar);
+)(Topbar);

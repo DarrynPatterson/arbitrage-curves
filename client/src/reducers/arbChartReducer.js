@@ -1,4 +1,4 @@
-import { GET_ITEMS, ITEMS_LOADING } from "../actions/types";
+import { GET_ARB_CHART, ARB_CHART_LOADING } from "../actions/types";
 
 const initialState = {
   items: [],
@@ -7,13 +7,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_ITEMS:
+    case GET_ARB_CHART:
       return {
         ...state,
         items: action.payload,
         loading: false
       };
-    case ITEMS_LOADING:
+    case ARB_CHART_LOADING:
       return {
         ...state,
         loading: true

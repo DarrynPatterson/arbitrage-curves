@@ -1,14 +1,14 @@
 import axios from "axios";
-import { GET_ITEMS, ITEMS_LOADING } from "./types";
+import { GET_ARB_CHART, ARB_CHART_LOADING } from "./types";
 import { returnErrors } from "./errorActions";
 
-export const getChart = () => dispatch => {
+export const getArbChart = () => dispatch => {
   dispatch(setItemsLoading());
   axios
-    .get("/api/chart")
+    .get("/api/v1/chart")
     .then(res =>
       dispatch({
-        type: GET_ITEMS,
+        type: GET_ARB_CHART,
         payload: getSeriesData(res.data)
       })
     )
@@ -19,7 +19,7 @@ export const getChart = () => dispatch => {
 
 export const setItemsLoading = () => {
   return {
-    type: ITEMS_LOADING
+    type: ARB_CHART_LOADING
   };
 };
 

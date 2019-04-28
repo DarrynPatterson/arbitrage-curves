@@ -10,7 +10,7 @@ const SpotPrice = require("../../models/SpotPrice");
 // @route   GET api/chart
 // @desc    Get chart data
 // @access  Public
-router.get("/", (req, res) => {
+router.get("/chart", (req, res) => {
   const yesterday = moment().utc().subtract(1, "days").format("YYYYMMDD");
   const yesterdayUtc = moment(yesterday).utc().valueOf();
 

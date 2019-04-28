@@ -23,7 +23,7 @@ mongoose
   .catch(err => console.log(err));
 
 // Use Routes
-app.use("/api/chart", require("./routes/api/chart"));
+app.use("/api/v1", require("./routes/api/v1"));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
 

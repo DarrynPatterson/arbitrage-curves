@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { connect } from "react-redux";
-import { getChart } from "../actions/chartActions";
+import { getArbChart } from "../actions/arbChartActions";
 import PropTypes from "prop-types";
 
 class Chart extends Component {
   static propTypes = {
-    getChart: PropTypes.func.isRequired
+    getArbChart: PropTypes.func.isRequired
   };
 
   componentDidMount() {
-    this.props.getChart();
+    this.props.getArbChart();
   }
 
   render() {
@@ -21,8 +21,7 @@ class Chart extends Component {
         options={{
           title: "Price",
           series: this.props.chart.items
-        }}
-      />
+        }} />
     );
   }
 }
@@ -33,5 +32,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getChart }
+  { getArbChart }
 )(Chart);

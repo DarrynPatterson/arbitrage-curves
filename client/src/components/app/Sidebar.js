@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { setSelectedItem } from "../../actions/sidebarActions";
 
-class AppSidebar extends Component {
+class Sidebar extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired
+    setSelectedItem: PropTypes.func.isRequired
   };
 
   render() {
+
     const brand = (
       <div>
-        <a className="sidebar-brand d-flex align-items-center justify-content-center" href="javascript:void(0)">
+        <a className="sidebar-brand d-flex align-items-center justify-content-center" href="#">
           <div className="sidebar-brand-icon">
             <i className="fas fa-coins" />
           </div>
@@ -24,13 +26,17 @@ class AppSidebar extends Component {
       <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
         {brand}
         <li className="nav-item">
-          <a className="nav-link" href="#">
+          <a onClick={() => {
+            this.props.setSelectedItem("dashboard");
+          }} className="nav-link" href="#">
             <i className="fas fa-fw fa-tachometer-alt" />
             <span> Dashboard</span>
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#">
+          <a onClick={() => {
+            this.props.setSelectedItem("contact");
+          }} className="nav-link" href="#">
             <i className="fas fa-envelope" />
             <span> Contact</span>
           </a>
@@ -47,5 +53,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  null
-)(AppSidebar);
+  { setSelectedItem }
+)(Sidebar);

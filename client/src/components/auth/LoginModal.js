@@ -16,8 +16,13 @@ import { login } from "../../actions/authActions";
 import { clearErrors } from "../../actions/errorActions";
 
 class LoginModal extends Component {
+  constructor(props) {
+    super(props);
+    this.inputEmailRef = React.createRef();
+  }
+
   state = {
-    modal: false,
+    showModal: false,
     email: "",
     password: "",
     msg: null
@@ -30,7 +35,7 @@ class LoginModal extends Component {
     clearErrors: PropTypes.func.isRequired
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { error, isAuthenticated } = this.props;
     if (error !== prevProps.error) {
       // Check for register error
@@ -42,10 +47,14 @@ class LoginModal extends Component {
     }
 
     // If authenticated, close modal
-    if (this.state.modal) {
+    if (this.state.showModal) {
       if (isAuthenticated) {
         this.toggle();
       }
+    }
+
+    if (this.state.showModal && !prevState.showModal) {
+      this.inputEmailRef.current.focus();
     }
   }
 
@@ -53,7 +62,7 @@ class LoginModal extends Component {
     // Clear errors
     this.props.clearErrors();
     this.setState({
-      modal: !this.state.modal
+      showModal: !this.state.showModal
     });
   };
 
@@ -82,7 +91,7 @@ class LoginModal extends Component {
           <span className="text">Login</span>
         </a>
 
-        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+        <Modal isOpen={this.state.showModal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Login</ModalHeader>
           <ModalBody>
             {this.state.msg ? (
@@ -92,13 +101,13 @@ class LoginModal extends Component {
               <FormGroup>
                 <Label for="email">Email</Label>
                 <Input
+                  ref={this.inputEmailRef}
                   type="email"
                   name="email"
                   id="email"
                   placeholder="Email"
                   className="mb-3"
-                  onChange={this.onChange}
-                />
+                  onChange={this.onChange} />
 
                 <Label for="password">Password</Label>
                 <Input
@@ -107,8 +116,7 @@ class LoginModal extends Component {
                   id="password"
                   placeholder="Password"
                   className="mb-3"
-                  onChange={this.onChange}
-                />
+                  onChange={this.onChange} />
                 <Button color="dark" style={{ marginTop: "2rem" }} block>
                   Login
                 </Button>

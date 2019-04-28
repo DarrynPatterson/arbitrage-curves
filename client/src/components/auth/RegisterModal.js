@@ -18,7 +18,7 @@ import { clearErrors } from "../../actions/errorActions";
 class RegisterModal extends Component {
 
   state = {
-    modal: false,
+    showModal: false,
     name: "",
     email: "",
     password: "",
@@ -44,7 +44,7 @@ class RegisterModal extends Component {
     }
 
     // If authenticated, close modal
-    if (this.state.modal) {
+    if (this.state.showModal) {
       if (isAuthenticated) {
         this.toggle();
       }
@@ -55,7 +55,7 @@ class RegisterModal extends Component {
     // Clear errors
     this.props.clearErrors();
     this.setState({
-      modal: !this.state.modal
+      showModal: !this.state.showModal
     });
   };
 
@@ -86,7 +86,7 @@ class RegisterModal extends Component {
           <span className="text">Sign Up</span>
         </a>
 
-        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+        <Modal isOpen={this.state.showModal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
           <ModalBody>
             {this.state.msg ? (

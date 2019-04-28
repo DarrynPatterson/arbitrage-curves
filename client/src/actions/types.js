@@ -1,9 +1,12 @@
 // Spot price
 export const GET_SPOT_PRICES = "GET_SPOT_PRICES";
 
-// Chart
-export const GET_ITEMS = "GET_ITEMS";
-export const ITEMS_LOADING = "ITEMS_LOADING";
+// Arb chart
+export const GET_ARB_CHART = "GET_ARB_CHART";
+export const ARB_CHART_LOADING = "ARB_CHART_LOADING";
+
+// Sidebar
+export const SIDEBAR_ITEM_SELECTED = "SIDEBAR_ITEM_SELECTED";
 
 // Auth
 export const USER_LOADING = "USER_LOADING";
