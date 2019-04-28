@@ -19,6 +19,7 @@
     "config": "^3.0.1",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.5.0",
+    "moment": "^2.24.0",
     "mongoose": "^5.1.6"
   },
   "devDependencies": {

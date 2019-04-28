@@ -18,10 +18,10 @@ class SpotPrice extends Component {
 
     return (
       <div className="row">
-        <CardPrice color="primary" name="CoinDesk BTC/USD" value={`$${spotPrices.coinDeskBtcUsd}`} />
-        <CardPrice color="success" name="Kraken BTC/USD" value={`$${spotPrices.krakenBtcUsd}`} />
-        <CardPrice color="info" name="CEX BTC/USD" value={`$${spotPrices.cexBtcUsd}`} />
-        <CardPrice color="warning" name="Luno BTC/ZAR" value={`R${spotPrices.lunoZar}`} />
+        <CardPrice color="primary" name="CoinDesk BTC/USD" value={spotPrices.coinDeskBtcUsd} />
+        <CardPrice color="success" name="Kraken BTC/USD" value={spotPrices.krakenBtcUsd} />
+        <CardPrice color="info" name="CEX BTC/USD" value={spotPrices.cexBtcUsd} />
+        <CardPrice color="warning" name="Luno BTC/ZAR" value={spotPrices.lunoZar} />
       </div>
     );
   }

@@ -18,6 +18,7 @@ class ContentArea extends Component {
 
     const authContent = (
       <>
+        <SpotPrice />
         <Chart />
       </>
     );
