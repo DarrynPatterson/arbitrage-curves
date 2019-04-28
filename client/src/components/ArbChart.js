@@ -20,14 +20,14 @@ class Chart extends Component {
         highcharts={Highcharts}
         options={{
           title: "Price",
-          series: this.props.chart.items
+          series: this.props.arbChart.items
         }} />
     );
   }
 }
 
 const mapStateToProps = state => ({
-  chart: state.chart
+  arbChart: state.arbChart
 });
 
 export default connect(

@@ -5,10 +5,6 @@ import ArbChart from "./ArbChart";
 import SpotPrice from "./SpotPrice";
 
 class Dashboard extends Component {
-  state = {
-    isOpen: false
-  };
-
   static propTypes = {
     auth: PropTypes.object.isRequired
   };
@@ -24,9 +20,7 @@ class Dashboard extends Component {
     );
 
     const guestContent = (
-      <>
         <SpotPrice />
-      </>
     );
 
     return <div>{isAuthenticated ? authContent : guestContent}</div>;

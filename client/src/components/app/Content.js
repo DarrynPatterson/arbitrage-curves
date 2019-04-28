@@ -4,6 +4,7 @@ import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import Dashboard from "../Dashboard";
 import Contact from "../Contact";
+import Header from "../Header";
 
 class Content extends Component {
 
@@ -17,6 +18,7 @@ class Content extends Component {
             <div id="content">
               <Topbar />
               <div className="container-fluid">
+                <Header name={selectedItem} />
                 {selectedItem === 'dashboard' && <Dashboard />}
                 {selectedItem === 'contact' && <Contact />}
               </div>

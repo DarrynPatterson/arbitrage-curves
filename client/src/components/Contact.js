@@ -8,7 +8,7 @@ import "../vendor/fontawesome-free/css/all.min.css";
 class Contact extends Component {
 
   render() {
-    return <div>Contact Page</div>;
+    return <><i className="fas fa-address-book"></i> <a href="mailto:darryn.patterson@gmail.com">darryn.patterson@gmail.com</a></>;
   }
 }
 
