@@ -7,8 +7,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_SPOT_PRICES:
-      console.log(action.payload);
-
       return {
         ...state,
         spotPrices: action.payload

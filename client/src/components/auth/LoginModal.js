@@ -78,7 +78,7 @@ class LoginModal extends Component {
   render() {
     return (
       <>
-        <a onClick={this.toggle} href="#" className="btn btn-primary btn-icon-split">
+        <a onClick={this.toggle} href="javascript:void(0)" className="btn btn-primary btn-icon-split">
           <span className="text">Login</span>
         </a>
 

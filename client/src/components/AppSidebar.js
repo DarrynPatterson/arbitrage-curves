@@ -27,7 +27,7 @@ class AppSidebar extends Component {
       <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
         {brand}
         <li className="nav-item">
-          <a className="nav-link" href="#">
+          <a className="nav-link" href="javascript:void(0)">
             <i className="fas fa-fw fa-tachometer-alt" />
             <span>Dashboard</span>
           </a>

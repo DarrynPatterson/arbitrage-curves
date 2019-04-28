@@ -82,7 +82,7 @@ class RegisterModal extends Component {
   render() {
     return (
       <>
-        <a onClick={this.toggle} href="#" className="btn btn-danger btn-icon-split ml-2">
+        <a onClick={this.toggle} href="javascript:void(0)" className="btn btn-danger btn-icon-split ml-2">
           <span className="text">Sign Up</span>
         </a>
 

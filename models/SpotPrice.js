@@ -12,7 +12,7 @@ const SpotPriceSchema = new Schema({
     }
   },
   cexBtcUsd: {
-    type: "Date"
+    type: "String"
   },
   cexBchUsd: {
     type: "String"
