@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const config = require("config");
 const jwt = require("jsonwebtoken");
+const Mailer = require("../../services/Mailer");
 
 // User Model
 const User = require("../../models/User");
@@ -34,6 +35,26 @@ router.post("/", (req, res) => {
         if (err) throw err;
         newUser.password = hash;
         newUser.save().then(user => {
+          
+          // Send registration email
+          const body = `Hi ${user.name}
+          <br/><br/>
+          Thanks for signing up to <a href='coinarbitrage.xyz'>Coin Arbitrage</a>!
+          <br/><br/>
+          Your account is now <b>active</b>.
+          <br/><br/>
+          All the best,
+          <br/>
+          Darryn`;
+
+          Mailer.sendMail(
+            (from = "no-reply@coinarbitrage.xyz"),
+            (to = user.email),
+            (subject = "Welcome to Coin Arbitrage"),
+            body
+          );
+
+          // Return token
           jwt.sign(
             { id: user.id },
             config.get("jwtSecret"),
