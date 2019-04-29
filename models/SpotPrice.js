@@ -54,7 +54,7 @@ const SpotPriceSchema = new Schema({
     type: "String"
   },
   coinDeskBtcZar: {
-    type: "Date"
+    type: "String"
   },
   coinDeskTimestamp: {
     $date: {

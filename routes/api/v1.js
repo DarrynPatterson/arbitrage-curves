@@ -11,7 +11,7 @@ const SpotPrice = require("../../models/SpotPrice");
 // @desc    Get chart data
 // @access  Public
 router.get("/chart", (req, res) => {
-  const yesterday = moment().utc().subtract(1, "days").format("YYYYMMDD");
+  const yesterday = moment().utc().subtract(10, "hours").format("YYYYMMDD");
   const yesterdayUtc = moment(yesterday).utc().valueOf();
 
   Chart.find({ dateUtc: { $gt: yesterdayUtc } })

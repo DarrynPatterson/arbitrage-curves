@@ -7,16 +7,16 @@ const ChartSchema = new Schema({
     type: "Date"
   },
   lunoLastPriceUsd: {
-    type: "Date"
+    type: "String"
   },
   cexIoLastPriceUsd: {
-    type: "Date"
+    type: "String"
   },
   coinDeskLastPriceUsd: {
-    type: "Date"
+    type: "String"
   },
   krakenLastPriceUsd: {
-    type: "Date"
+    type: "String"
   }
 });
 
