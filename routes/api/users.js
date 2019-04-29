@@ -3,9 +3,11 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const config = require("config");
 const jwt = require("jsonwebtoken");
+
+// Services
 const Mailer = require("../../services/Mailer");
 
-// User Model
+// Models
 const User = require("../../models/User");
 
 // @route   POST api/users
@@ -14,9 +16,13 @@ const User = require("../../models/User");
 router.post("/", (req, res) => {
   const { name, email, password } = req.body;
 
-  // Simple validation
+  // Validation
   if (!name || !email || !password) {
     return res.status(400).json({ msg: "Please enter all fields" });
+  }
+
+  if (password.length < 6) {
+    return res.status(400).json({ msg: "Password must be at least 6 characters long" });
   }
 
   // Check for existing user
