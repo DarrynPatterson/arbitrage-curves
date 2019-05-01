@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { setSelectedItem } from "../../actions/sidebarActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoins, faTachometerAlt, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 class Sidebar extends Component {
   static propTypes = {
@@ -14,7 +16,7 @@ class Sidebar extends Component {
       <div>
         <a className="sidebar-brand d-flex align-items-center justify-content-center" href="#">
           <div className="sidebar-brand-icon">
-            <i className="fas fa-coins" />
+            <FontAwesomeIcon icon={faCoins} size="lg" />
           </div>
           <div className="sidebar-brand-text mx-3">Coin Arbitrage</div>
         </a>
@@ -29,7 +31,7 @@ class Sidebar extends Component {
           <a onClick={() => {
             this.props.setSelectedItem("dashboard");
           }} className="nav-link" href="#">
-            <i className="fas fa-fw fa-tachometer-alt" />
+            <FontAwesomeIcon icon={faTachometerAlt} />
             <span> Dashboard</span>
           </a>
         </li>
@@ -37,7 +39,7 @@ class Sidebar extends Component {
           <a onClick={() => {
             this.props.setSelectedItem("contact");
           }} className="nav-link" href="#">
-            <i className="fas fa-envelope" />
+            <FontAwesomeIcon icon={faEnvelope} />
             <span> Contact</span>
           </a>
         </li>
