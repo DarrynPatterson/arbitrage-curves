@@ -1,6 +1,6 @@
 {
   "mongoURI": "",
-  "jwtSecret": "JwtSecret",
+  "jwtSecret": "",
   "email": {
     "host": "",
     "port": 25,

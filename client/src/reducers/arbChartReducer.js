@@ -2,7 +2,7 @@ import { GET_ARB_CHART, ARB_CHART_LOADING } from "../actions/types";
 
 const initialState = {
   items: [],
-  loading: false
+  isLoading: false
 };
 
 export default (state = initialState, action) => {
@@ -11,12 +11,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         items: action.payload,
-        loading: false
+        isLoading: false
       };
     case ARB_CHART_LOADING:
       return {
         ...state,
-        loading: true
+        isLoading: true
       };
     default:
       return state;

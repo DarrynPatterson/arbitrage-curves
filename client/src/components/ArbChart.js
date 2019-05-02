@@ -7,7 +7,8 @@ import PropTypes from "prop-types";
 
 class Chart extends Component {
   static propTypes = {
-    getArbChart: PropTypes.func.isRequired
+    arbChart: PropTypes.object.isRequired,
+    getArbChart: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -16,12 +17,9 @@ class Chart extends Component {
 
   render() {
     return (
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={{
-          title: "Price",
-          series: this.props.arbChart.items
-        }} />
+      <>
+        {!this.props.arbChart.isLoading && <HighchartsReact highcharts={Highcharts} options={{title: "Price", series: this.props.arbChart.items}} />}
+      </>
     );
   }
 }
