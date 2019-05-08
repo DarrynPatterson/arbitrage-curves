@@ -3,7 +3,6 @@ const nodemailer = require("nodemailer");
 
 class Mailer {
   static sendMail(from = "", to = "", subject = "", body = "") {
-    const output = "<div>hello</div>";
 
     // Create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({

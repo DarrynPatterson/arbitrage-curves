@@ -7,5 +7,9 @@
     "secure": false,
     "username": "",
     "password": ""
+  },
+  "kraken": {
+    "key": "",
+    "secret": ""
   }
 }
