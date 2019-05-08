@@ -15,6 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cexio-api-node": "^1.2.0",
     "concurrently": "^3.6.0",
     "config": "^3.0.1",
     "express": "^4.16.3",

@@ -11,5 +11,10 @@
   "kraken": {
     "key": "",
     "secret": ""
+  },
+  "cex": {
+    "clientId": "",
+    "key": "",
+    "secret": ""
   }
 }
