@@ -25,6 +25,8 @@ mongoose
 app.use("/api/v1", require("./routes/api/v1"));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/exchange/cexio", require("./routes/api/exchange/cexio"));
+app.use("/api/exchange/kraken", require("./routes/api/exchange/kraken"));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
