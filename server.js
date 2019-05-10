@@ -2,7 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const config = require("config");
+const logger = require("./middleware/logger");
 const app = express();
+
+// Use logger Middleware
+app.use(logger);
 
 // Bodyparser Middleware
 app.use(express.json());

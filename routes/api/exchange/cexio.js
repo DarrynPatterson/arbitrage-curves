@@ -12,14 +12,13 @@ const cexioSecret = config.get("cexio.secret");
 const cexioPublicApi = new CEXIO().rest;
 const cexioPrivateApi = new CEXIO(cexioClientId, cexioKey, cexioSecret).rest;
 
-const cexioTicker = "BTC/USD";
-
 // @route   GET api/exchange/cexio/orderbook
 // @desc    Get cexio orderbook
 // @access  Public
 router.get("/orderbook", (req, res) => {
+  const pair = "BTC/USD";
   const orderBookDepth = 2;
-  cexioPublicApi.orderbook(cexioTicker, orderBookDepth, (err, data) => {
+  cexioPublicApi.orderbook(pair, orderBookDepth, (err, data) => {
     if (err) return console.error(err);
 
     // Map asks
@@ -73,7 +72,8 @@ router.get("/accountbalance", (req, res) => {
 // @desc    Get cexio open orders
 // @access  Public
 router.get("/openorders", (req, res) => {
-  cexioPrivateApi.open_orders(cexioTicker, (err, data) => {
+  const pair = "BTC/USD";
+  cexioPrivateApi.open_orders(pair, (err, data) => {
     if (err) return console.error(err);
     res.json(data);
   });
@@ -83,10 +83,55 @@ router.get("/openorders", (req, res) => {
 // @desc    Cancel all cexio open orders
 // @access  Public
 router.put("/cancelorders", (req, res) => {
-  cexioPrivateApi.cancel_pair_orders(cexioTicker, (err, data) => {
+  const pair = "BTC/USD";
+  cexioPrivateApi.cancel_pair_orders(pair, (err, data) => {
     if (err) return console.error(err);
     res.json(data);
   });
+});
+
+// @route   POST api/exchange/cexio/buyorder
+// @desc    Place a cexio buy order
+// @access  Public
+router.post("/buyorder", (req, res) => {
+  const pair = "BTC/USD";
+  const orderType = "buy";
+  const volume = parseFloat(req.body.volume);
+  const price = parseFloat(req.body.price);
+
+  cexioPrivateApi.place_order(
+    pair,
+    orderType,
+    volume,
+    price,
+    null,
+    (err, data) => {
+      if (err) return console.error(err);
+      res.json(data);
+    }
+  );
+});
+
+// @route   POST api/exchange/cexio/sellorder
+// @desc    Place a cexio sell order
+// @access  Public
+router.post("/sellorder", (req, res) => {
+  const pair = "BTC/USD";
+  const orderType = "sell";
+  const volume = parseFloat(req.body.volume);
+  const price = parseFloat(req.body.price);
+
+  cexioPrivateApi.place_order(
+    pair,
+    orderType,
+    volume,
+    price,
+    null,
+    (err, data) => {
+      if (err) return console.error(err);
+      res.json(data);
+    }
+  );
 });
 
 module.exports = router;
