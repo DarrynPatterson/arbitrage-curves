@@ -12,13 +12,14 @@ const cexioSecret = config.get("cexio.secret");
 const cexioPublicApi = new CEXIO().rest;
 const cexioPrivateApi = new CEXIO(cexioClientId, cexioKey, cexioSecret).rest;
 
+const cexioTicker = "BTC/USD";
+
 // @route   GET api/exchange/cexio/orderbook
 // @desc    Get cexio orderbook
 // @access  Public
 router.get("/orderbook", (req, res) => {
-  const pair = "BTC/USD";
   const orderBookDepth = 2;
-  cexioPublicApi.orderbook(pair, orderBookDepth, (err, data) => {
+  cexioPublicApi.orderbook(cexioTicker, orderBookDepth, (err, data) => {
     if (err) return console.error(err);
 
     // Map asks
@@ -72,10 +73,18 @@ router.get("/accountbalance", (req, res) => {
 // @desc    Get cexio open orders
 // @access  Public
 router.get("/openorders", (req, res) => {
-  const pair = "BTC/USD";
-  cexioPrivateApi.open_orders(pair, (err, data) => {
+  cexioPrivateApi.open_orders(cexioTicker, (err, data) => {
     if (err) return console.error(err);
+    res.json(data);
+  });
+});
 
+// @route   PUT api/exchange/cexio/cancelorders
+// @desc    Cancel all cexio open orders
+// @access  Public
+router.put("/cancelorders", (req, res) => {
+  cexioPrivateApi.cancel_pair_orders(cexioTicker, (err, data) => {
+    if (err) return console.error(err);
     res.json(data);
   });
 });

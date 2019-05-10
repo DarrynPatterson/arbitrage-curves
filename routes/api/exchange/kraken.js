@@ -95,4 +95,41 @@ router.get("/openorders", (req, res) => {
     });
 });
 
+// @route   PUT api/exchange/kraken/cancelorders
+// @desc    Cancel all kraken open orders
+// @access  Public
+router.put("/cancelorders", (req, res) => {
+  const pair = "BTCUSD";
+
+  // Get open orders
+  krakenApi
+    .call("OpenOrders", { trades: false })
+    .then(data => {
+      let result = [];
+      const openOrders = data.open;
+      for (let orderId in openOrders) {
+        const info = openOrders[orderId];
+        if (info.descr.pair === pair) {
+          result.push(orderId);
+
+          // Cancel order
+          krakenApi
+            .call("CancelOrder", { txid: orderId })
+            .then(data => console.log(`Canelled order id: ${orderId}`))
+            .catch(err => {
+              console.error(err);
+              return res.status(400).json({ msg: err });
+            });
+        }
+      }
+
+      // Return cancelled order ids
+      res.json(result);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(400).json({ msg: err });
+    });
+});
+
 module.exports = router;
