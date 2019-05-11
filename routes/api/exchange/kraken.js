@@ -132,4 +132,46 @@ router.put("/cancelorders", (req, res) => {
     });
 });
 
+// @route   POST api/exchange/kraken/buyorder
+// @desc    Place a kraken buy order
+// @access  Public
+router.post("/buyorder", (req, res) => {
+  const pair = "BTCUSD";
+  const type = "buy";
+  const ordertype = "limit";
+  const price = parseFloat(req.body.price);
+  const volume = parseFloat(req.body.volume);
+
+  krakenApi
+    .call("AddOrder", { pair, type, ordertype, price, volume })
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(400).json({ msg: err });
+    });
+});
+
+// @route   POST api/exchange/kraken/sellorder
+// @desc    Place a kraken sell order
+// @access  Public
+router.post("/sellorder", (req, res) => {
+  const pair = "BTCUSD";
+  const type = "sell";
+  const ordertype = "limit";
+  const price = parseFloat(req.body.price);
+  const volume = parseFloat(req.body.volume);
+
+  krakenApi
+    .call("AddOrder", { pair, type, ordertype, price, volume })
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(400).json({ msg: err });
+    });
+});
+
 module.exports = router;
