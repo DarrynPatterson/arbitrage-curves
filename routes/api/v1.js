@@ -1,37 +1,38 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../../middleware/auth");
 const moment = require("moment");
+const auth = require("../../middleware/auth");
 
 // Models
 const Chart = require("../../models/Chart");
 const SpotPrice = require("../../models/SpotPrice");
 
-// @route   GET api/chart
+// @route   GET api/v1/chart
 // @desc    Get chart data
 // @access  Public
 router.get("/chart", (req, res) => {
-  const yesterday = moment()
+  const pastMoment = moment()
     .utc()
     .subtract(14, "hours")
     .format("YYYYMMDD");
-  const yesterdayUtc = moment(yesterday)
+  const pastMomentUtc = moment(pastMoment)
     .utc()
     .valueOf();
 
-  Chart.find({ dateUtc: { $gt: yesterdayUtc } })
+  Chart.find({ dateUtc: { $gt: pastMomentUtc } })
     .select({})
     .then(items => {
-      if (!items) return res.status(400).json({ msg: "Chart data not found" });
+      if (!items)
+        return res.status(400).json({ msg: "No chart data available" });
 
       res.json(items);
     })
     .catch(err => {
-      console.error(err);
+      return res.status(400).json({ msg: "Chart data not found" });
     });
 });
 
-// @route   GET api/spotprices
+// @route   GET api/v1/spotprices
 // @desc    Get chart spot prices
 // @access  Public
 router.get("/spotprices", (req, res) => {
@@ -39,7 +40,7 @@ router.get("/spotprices", (req, res) => {
     .select({})
     .then(items => {
       if (!items && items.length > 0)
-        return res.status(400).json({ msg: "Spot price data not found" });
+        return res.status(400).json({ msg: "No spot price data available" });
 
       const data = items[0];
       const result = {
@@ -52,7 +53,7 @@ router.get("/spotprices", (req, res) => {
       res.json(result);
     })
     .catch(err => {
-      console.error(err);
+      res.status(400).json({ msg: "Spot price data not found" });
     });
 });
 

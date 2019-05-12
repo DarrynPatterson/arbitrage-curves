@@ -11,7 +11,6 @@ const kraken = require("node-kraken-api");
 const krakenApi = kraken({
   key: krakenKey,
   secret: krakenSecret
-  //tier: "1"
 });
 
 // @route   GET api/exchange/kraken/orderbook
@@ -46,7 +45,9 @@ router.get("/orderbook", (req, res) => {
 
       res.json(result);
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+      res.status(400).json({ msg: "Order book not found" });
+    });
 });
 
 // @route   GET api/exchange/kraken/accountbalance
@@ -57,24 +58,39 @@ router.get("/accountbalance", (req, res) => {
     .call("Balance")
     .then(data => {
       const result = {
+        USD: {
+          available: data.ZUSD ? data.ZUSD : 0
+        },
         BTC: {
           available: data.XBTC ? data.XBTC : 0
         },
-        USD: {
-          available: data.ZUSD ? data.ZUSD : 0
+        BCH: {
+          available: data.BCH ? data.BCH : 0
+        },
+        BTG: {
+          available: data.BTG ? data.BTG : 0
+        },
+        LTC: {
+          available: data.XLTC ? data.XLTC : 0
         }
       };
 
       res.json(result);
     })
-    .catch(err => console.error(err));
+    .catch(err => res.status(400).json({ msg: "Account balance not found" }));
 });
 
 // @route   GET api/exchange/kraken/openorders
 // @desc    Get kraken open orders
 // @access  Public
 router.get("/openorders", (req, res) => {
-  const pair = "BTCUSD";
+  const pair = req.query.pair;
+
+  // Format = BTCUSD
+  if (!pair) {
+    return res.status(400).json({ msg: "No 'pair' query param was provided" });
+  }
+
   krakenApi
     .call("OpenOrders", { trades: false })
     .then(data => {
@@ -90,8 +106,7 @@ router.get("/openorders", (req, res) => {
       res.json(result);
     })
     .catch(err => {
-      console.error(err);
-      return res.status(400).json({ msg: err });
+      return res.status(400).json({ msg: "Open orders not found", error: err });
     });
 });
 
@@ -99,7 +114,12 @@ router.get("/openorders", (req, res) => {
 // @desc    Cancel all kraken open orders
 // @access  Public
 router.put("/cancelorders", (req, res) => {
-  const pair = "BTCUSD";
+  const pair = req.query.pair;
+
+  // Format = BTCUSD
+  if (!pair) {
+    return res.status(400).json({ msg: "No 'pair' query param was provided" });
+  }
 
   // Get open orders
   krakenApi
@@ -115,10 +135,12 @@ router.put("/cancelorders", (req, res) => {
           // Cancel order
           krakenApi
             .call("CancelOrder", { txid: orderId })
-            .then(data => console.log(`Canelled order id: ${orderId}`))
+            .then(data => res.json({ msg: `Cancelled order id: ${orderId}` }))
             .catch(err => {
-              console.error(err);
-              return res.status(400).json({ msg: err });
+              return res.status(400).json({
+                msg: `Order id: ${orderId} not cancelled`,
+                error: err
+              });
             });
         }
       }
@@ -127,8 +149,7 @@ router.put("/cancelorders", (req, res) => {
       res.json(result);
     })
     .catch(err => {
-      console.error(err);
-      return res.status(400).json({ msg: err });
+      return res.status(400).json({ msg: "Open orders not found", error: err });
     });
 });
 
@@ -136,7 +157,13 @@ router.put("/cancelorders", (req, res) => {
 // @desc    Place a kraken buy order
 // @access  Public
 router.post("/buyorder", (req, res) => {
-  const pair = "BTCUSD";
+  const pair = req.query.pair;
+
+  // Format = BTCUSD
+  if (!pair) {
+    return res.status(400).json({ msg: "No 'pair' query param was provided" });
+  }
+
   const type = "buy";
   const ordertype = "limit";
   const price = parseFloat(req.body.price);
@@ -148,8 +175,10 @@ router.post("/buyorder", (req, res) => {
       res.json(data);
     })
     .catch(err => {
-      console.error(err);
-      return res.status(400).json({ msg: err });
+      return res.status(400).json({
+        msg: "Order not submitted",
+        error: err
+      });
     });
 });
 
@@ -157,7 +186,13 @@ router.post("/buyorder", (req, res) => {
 // @desc    Place a kraken sell order
 // @access  Public
 router.post("/sellorder", (req, res) => {
-  const pair = "BTCUSD";
+  const pair = req.query.pair;
+
+  // Format = BTCUSD
+  if (!pair) {
+    return res.status(400).json({ msg: "No 'pair' query param was provided" });
+  }
+
   const type = "sell";
   const ordertype = "limit";
   const price = parseFloat(req.body.price);
@@ -169,8 +204,10 @@ router.post("/sellorder", (req, res) => {
       res.json(data);
     })
     .catch(err => {
-      console.error(err);
-      return res.status(400).json({ msg: err });
+      return res.status(400).json({
+        msg: "Order not submitted",
+        error: err
+      });
     });
 });
 

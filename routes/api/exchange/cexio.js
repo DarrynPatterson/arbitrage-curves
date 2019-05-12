@@ -19,7 +19,7 @@ router.get("/orderbook", (req, res) => {
   const pair = "BTC/USD";
   const orderBookDepth = 2;
   cexioPublicApi.orderbook(pair, orderBookDepth, (err, data) => {
-    if (err) return console.error(err);
+    if (err) return res.status(400).json({ msg: "Order book not found" });
 
     // Map asks
     const asks = data.asks.map(item => {
@@ -51,19 +51,25 @@ router.get("/orderbook", (req, res) => {
 // @access  Public
 router.get("/accountbalance", (req, res) => {
   cexioPrivateApi.account_balance((err, data) => {
-    if (err) return console.error(err);
+    if (err) return res.status(400).json({ msg: "Account balance not found" });
 
     const result = {
-      BTC: {
-        available: parseFloat(data.BTC.available)
-        // orders: data.BTC.orders
-      },
       USD: {
         available: parseFloat(data.USD.available)
-        // orders: data.USD.orders
+      },
+      BTC: {
+        available: parseFloat(data.BTC.available)
+      },
+      BCH: {
+        available: parseFloat(data.BCH.available)
+      },
+      BTG: {
+        available: parseFloat(data.BTG.available)
+      },
+      LTC: {
+        available: parseFloat(data.LTC.available)
       }
     };
-
     res.json(result);
   });
 });
@@ -72,9 +78,17 @@ router.get("/accountbalance", (req, res) => {
 // @desc    Get cexio open orders
 // @access  Public
 router.get("/openorders", (req, res) => {
-  const pair = "BTC/USD";
+  const pair = req.query.pair;
+
+  // Format = BTC/USD
+  if (!pair) {
+    return res.status(400).json({ msg: "No 'pair' query param was provided" });
+  }
+
   cexioPrivateApi.open_orders(pair, (err, data) => {
-    if (err) return console.error(err);
+    if (err)
+      return res.status(400).json({ msg: "Open orders not found", error: err });
+
     res.json(data);
   });
 });
@@ -83,9 +97,20 @@ router.get("/openorders", (req, res) => {
 // @desc    Cancel all cexio open orders
 // @access  Public
 router.put("/cancelorders", (req, res) => {
-  const pair = "BTC/USD";
+  const pair = req.query.pair;
+
+  // Format = BTC/USD
+  if (!pair) {
+    return res.status(400).json({ msg: "No 'pair' query param was provided" });
+  }
+
   cexioPrivateApi.cancel_pair_orders(pair, (err, data) => {
-    if (err) return console.error(err);
+    if (err)
+      return res.status(400).json({
+        msg: `Orders not cancelled`,
+        error: err
+      });
+
     res.json(data);
   });
 });
@@ -94,7 +119,13 @@ router.put("/cancelorders", (req, res) => {
 // @desc    Place a cexio buy order
 // @access  Public
 router.post("/buyorder", (req, res) => {
-  const pair = "BTC/USD";
+  const pair = req.query.pair;
+
+  // Format = BTC/USD
+  if (!pair) {
+    return res.status(400).json({ msg: "No 'pair' query param was provided" });
+  }
+
   const orderType = "buy";
   const volume = parseFloat(req.body.volume);
   const price = parseFloat(req.body.price);
@@ -106,7 +137,11 @@ router.post("/buyorder", (req, res) => {
     price,
     null,
     (err, data) => {
-      if (err) return console.error(err);
+      if (err)
+        return res.status(400).json({
+          msg: "Order not submitted",
+          error: err
+        });
       res.json(data);
     }
   );
@@ -116,7 +151,13 @@ router.post("/buyorder", (req, res) => {
 // @desc    Place a cexio sell order
 // @access  Public
 router.post("/sellorder", (req, res) => {
-  const pair = "BTC/USD";
+  const pair = req.query.pair;
+
+  // Format = BTC/USD
+  if (!pair) {
+    return res.status(400).json({ msg: "No 'pair' query param was provided" });
+  }
+
   const orderType = "sell";
   const volume = parseFloat(req.body.volume);
   const price = parseFloat(req.body.price);
@@ -128,7 +169,11 @@ router.post("/sellorder", (req, res) => {
     price,
     null,
     (err, data) => {
-      if (err) return console.error(err);
+      if (err)
+        return res.status(400).json({
+          msg: "Order not submitted",
+          error: err
+        });
       res.json(data);
     }
   );
