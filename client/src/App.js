@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Content from "./components/app/Content";
-
 import { Provider } from "react-redux";
-import store from "./store";
+import { store, persistor } from "./store";
 import { loadUser } from "./actions/authActions";
+
+import { PersistGate } from "redux-persist/integration/react";
 
 class App extends Component {
   componentDidMount() {
@@ -13,7 +14,9 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Content />
+        <PersistGate loading={null} persistor={persistor}>
+          <Content />
+        </PersistGate>
       </Provider>
     );
   }
