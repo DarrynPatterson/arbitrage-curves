@@ -1,5 +1,5 @@
 # Arbitrage Curves
-> Bitcoin price and arbitrage data for Kraken, CEX.IO, Luno and CoinDesk.
+> Bitcoin price and arbitrage data for Kraken, CEX.IO, Luno & CoinDesk.
 
 Live demo available at [coinarbitrage.xyz](https://coinarbitrage.xyz)
 
