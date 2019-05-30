@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
+let Schema = mongoose.Schema;
 
 // Create Schema
-const SpotPriceSchema = new Schema({
+let SpotPriceSchema = new Schema({
   lunoZar: {
     type: "String"
   },
@@ -71,7 +71,9 @@ const SpotPriceSchema = new Schema({
   }
 });
 
-module.exports = SpotPrice = mongoose.model(
+const SpotPrice = mongoose.model(
   "hb_exchangeSnapshots",
   SpotPriceSchema
 );
+
+export default SpotPrice;

@@ -1,8 +1,8 @@
-const config = require("config");
+import config from "config";
 const nodemailer = require("nodemailer");
 
 class Mailer {
-  static sendMail(from = "", to = "", subject = "", body = "") {
+  static sendMail(from: string = "", to: string = "", subject: string = "", body: string = ""): void {
 
     // Create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
@@ -26,17 +26,16 @@ class Mailer {
       html: body
     };
 
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
+    // Send mail with defined transport object
+    transporter.sendMail(mailOptions, (error: any, info: any) => {
       if (error) {
         return console.log(error);
       }
       // console.log('Message sent: %s', info.messageId);
       // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-
-      res.render("contact", { msg: "Email has been sent" });
+      // console.log("Email has been sent");
     });
   }
 }
 
-module.exports = Mailer;
+export default Mailer;

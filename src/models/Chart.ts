@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
+let Schema = mongoose.Schema;
 
 // Create Schema
-const ChartSchema = new Schema({
+let ChartSchema = new Schema({
   dateString: {
     type: "Date"
   },
@@ -20,4 +20,6 @@ const ChartSchema = new Schema({
   }
 });
 
-module.exports = Chart = mongoose.model("hb_lunoArbitrage", ChartSchema);
+const Chart = mongoose.model("hb_lunoArbitrage", ChartSchema);
+
+export default Chart;

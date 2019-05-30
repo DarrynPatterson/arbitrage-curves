@@ -1,11 +1,11 @@
-const express = require("express");
+import express, { Request, Response } from "express";
 const router = express.Router();
-const config = require("config");
+import config from "config";
 
 // Kraken
 const krakenKey = config.get("kraken.key");
 const krakenSecret = config.get("kraken.secret");
-const kraken = require("node-kraken-api");
+import kraken from "node-kraken-api";
 
 // Exchange APIs
 const krakenApi = kraken({
@@ -16,14 +16,14 @@ const krakenApi = kraken({
 // @route   GET api/exchange/kraken/orderbook
 // @desc    Get kraken orderbook
 // @access  Public
-router.get("/orderbook", (req, res) => {
+router.get("/orderbook", (req: Request, res: Response) => {
   const pair = "XXBTZUSD";
   const orderBookDepth = 2;
   krakenApi
     .call("Depth", { pair, count: orderBookDepth })
-    .then(data => {
+    .then((data: any) => {
       // Map asks
-      const asks = data[pair].asks.map(item => {
+      const asks = data[pair].asks.map((item: any) => {
         return {
           price: item[0],
           volume: item[1]
@@ -31,7 +31,7 @@ router.get("/orderbook", (req, res) => {
       });
 
       // Map bids
-      const bids = data[pair].bids.map(item => {
+      const bids = data[pair].bids.map((item: any) => {
         return {
           price: item[0],
           volume: item[1]
@@ -45,7 +45,7 @@ router.get("/orderbook", (req, res) => {
 
       res.json(result);
     })
-    .catch(err => {
+    .catch((err: any) => {
       res.status(400).json({ msg: "Order book not found" });
     });
 });
@@ -53,10 +53,10 @@ router.get("/orderbook", (req, res) => {
 // @route   GET api/exchange/kraken/accountbalance
 // @desc    Get kraken account balance
 // @access  Public
-router.get("/accountbalance", (req, res) => {
+router.get("/accountbalance", (req: Request, res: Response) => {
   krakenApi
     .call("Balance")
-    .then(data => {
+    .then((data: any) => {
       const result = {
         USD: {
           available: data.ZUSD ? data.ZUSD : 0
@@ -77,13 +77,13 @@ router.get("/accountbalance", (req, res) => {
 
       res.json(result);
     })
-    .catch(err => res.status(400).json({ msg: "Account balance not found" }));
+    .catch((err: any) => res.status(400).json({ msg: "Account balance not found" }));
 });
 
 // @route   GET api/exchange/kraken/openorders
 // @desc    Get kraken open orders
 // @access  Public
-router.get("/openorders", (req, res) => {
+router.get("/openorders", (req: Request, res: Response) => {
   const pair = req.query.pair;
 
   // Format = BTCUSD
@@ -93,7 +93,7 @@ router.get("/openorders", (req, res) => {
 
   krakenApi
     .call("OpenOrders", { trades: false })
-    .then(data => {
+    .then((data: any) => {
       let result = [];
       const openOrders = data.open;
       for (let orderId in openOrders) {
@@ -105,7 +105,7 @@ router.get("/openorders", (req, res) => {
 
       res.json(result);
     })
-    .catch(err => {
+    .catch((err: any) => {
       return res.status(400).json({ msg: "Open orders not found", error: err });
     });
 });
@@ -113,7 +113,7 @@ router.get("/openorders", (req, res) => {
 // @route   PUT api/exchange/kraken/cancelorders
 // @desc    Cancel all kraken open orders
 // @access  Public
-router.put("/cancelorders", (req, res) => {
+router.put("/cancelorders", (req: Request, res: Response) => {
   const pair = req.query.pair;
 
   // Format = BTCUSD
@@ -124,7 +124,7 @@ router.put("/cancelorders", (req, res) => {
   // Get open orders
   krakenApi
     .call("OpenOrders", { trades: false })
-    .then(data => {
+    .then((data: any) => {
       let result = [];
       const openOrders = data.open;
       for (let orderId in openOrders) {
@@ -135,8 +135,8 @@ router.put("/cancelorders", (req, res) => {
           // Cancel order
           krakenApi
             .call("CancelOrder", { txid: orderId })
-            .then(data => res.json({ msg: `Cancelled order id: ${orderId}` }))
-            .catch(err => {
+            .then((data: any) => res.json({ msg: `Cancelled order id: ${orderId}` }))
+            .catch((err: any) => {
               return res.status(400).json({
                 msg: `Order id: ${orderId} not cancelled`,
                 error: err
@@ -148,7 +148,7 @@ router.put("/cancelorders", (req, res) => {
       // Return cancelled order ids
       res.json(result);
     })
-    .catch(err => {
+    .catch((err: any) => {
       return res.status(400).json({ msg: "Open orders not found", error: err });
     });
 });
@@ -156,7 +156,7 @@ router.put("/cancelorders", (req, res) => {
 // @route   POST api/exchange/kraken/buyorder
 // @desc    Place a kraken buy order
 // @access  Public
-router.post("/buyorder", (req, res) => {
+router.post("/buyorder", (req: Request, res: Response) => {
   const pair = req.query.pair;
 
   // Format = BTCUSD
@@ -171,10 +171,10 @@ router.post("/buyorder", (req, res) => {
 
   krakenApi
     .call("AddOrder", { pair, type, ordertype, price, volume })
-    .then(data => {
+    .then((data: any) => {
       res.json(data);
     })
-    .catch(err => {
+    .catch((err: any) => {
       return res.status(400).json({
         msg: "Order not submitted",
         error: err
@@ -185,7 +185,7 @@ router.post("/buyorder", (req, res) => {
 // @route   POST api/exchange/kraken/sellorder
 // @desc    Place a kraken sell order
 // @access  Public
-router.post("/sellorder", (req, res) => {
+router.post("/sellorder", (req: Request, res: Response) => {
   const pair = req.query.pair;
 
   // Format = BTCUSD
@@ -200,10 +200,10 @@ router.post("/sellorder", (req, res) => {
 
   krakenApi
     .call("AddOrder", { pair, type, ordertype, price, volume })
-    .then(data => {
+    .then((data: any) => {
       res.json(data);
     })
-    .catch(err => {
+    .catch((err: any) => {
       return res.status(400).json({
         msg: "Order not submitted",
         error: err
@@ -211,4 +211,4 @@ router.post("/sellorder", (req, res) => {
     });
 });
 
-module.exports = router;
+module.exports = router

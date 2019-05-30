@@ -1,17 +1,18 @@
-const express = require("express");
+import express, { Request, Response } from "express";
 const router = express.Router();
-const bcrypt = require("bcryptjs");
-const config = require("config");
-const jwt = require("jsonwebtoken");
-const auth = require("../../middleware/auth");
+import config from "config";
+
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import auth from "../../middleware/auth";
 
 // Models
-const User = require("../../models/User");
+import User from "../../models/User";
 
 // @route   POST api/auth
 // @desc    Auth user
 // @access  Public
-router.post("/", (req, res) => {
+router.post("/", (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   // Simple validation
@@ -20,7 +21,7 @@ router.post("/", (req, res) => {
   }
 
   // Check for existing user
-  User.findOne({ email }).then(user => {
+  User.findOne({ email }).then((user) => {
     if (!user) return res.status(400).json({ msg: "User does not exist" });
 
     // Validate password
@@ -50,10 +51,10 @@ router.post("/", (req, res) => {
 // @route   GET api/auth/user
 // @desc    Get user data
 // @access  Private
-router.get("/user", auth, (req, res) => {
+router.get("/user", auth, (req: Request, res: Response) => {
   User.findById(req.user.id)
     .select("-password")
     .then(user => res.json(user));
 });
 
-module.exports = router;
+module.exports = router

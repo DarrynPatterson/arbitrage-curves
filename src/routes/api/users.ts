@@ -1,19 +1,20 @@
-const express = require("express");
+import express, { Request, Response } from "express";
+import mongoose, { Document } from "mongoose";
 const router = express.Router();
-const bcrypt = require("bcryptjs");
-const config = require("config");
-const jwt = require("jsonwebtoken");
+import config from "config";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 // Services
-const Mailer = require("../../services/Mailer");
+import Mailer from "../../services/Mailer";
 
 // Models
-const User = require("../../models/User");
+import User from "../../models/User";
 
 // @route   POST api/users
 // @desc    Register new user
 // @access  Public
-router.post("/", (req, res) => {
+router.post("/", (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
   // Validation
@@ -36,13 +37,16 @@ router.post("/", (req, res) => {
     });
 
     // Create salt & hash
-    bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.genSalt(10, (err: any, salt: string) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) throw err;
         newUser.password = hash;
-        newUser.save().then(user => {
+        newUser.save().then((user: Document) => {
           
           // Send registration email
+          const from = "no-reply@coinarbitrage.xyz";
+          const to = user.email;
+          const subject = "Welcome to Coin Arbitrage";
           const body = `Hi ${user.name}
           <br/><br/>
           Thanks for signing up to <a href='coinarbitrage.xyz'>Coin Arbitrage</a>!
@@ -53,12 +57,7 @@ router.post("/", (req, res) => {
           <br/>
           Darryn`;
 
-          Mailer.sendMail(
-            (from = "no-reply@coinarbitrage.xyz"),
-            (to = user.email),
-            (subject = "Welcome to Coin Arbitrage"),
-            body
-          );
+          Mailer.sendMail(from, to, subject, body);
 
           // Return token
           jwt.sign(

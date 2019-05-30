@@ -1,9 +1,9 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const path = require("path");
-const config = require("config");
-const logger = require("./middleware/logger");
-const app = express();
+import express, { Application, Request, Response, NextFunction } from "express";
+import mongoose from "mongoose";
+import path from "path";
+import config from "config";
+import logger from "./middleware/logger";
+const app: Application = express();
 
 // Use logger Middleware
 app.use(logger);
@@ -12,18 +12,18 @@ app.use(logger);
 app.use(express.json());
 
 // DB Config
-const db = config.get("mongoURI");
+const db: string = config.get("mongoURI");
 
 // Connect to Mongo
 //mongoose.set("debug", true);
-mongoose.pluralize(null);
+mongoose.pluralize((collectionName: string) => collectionName);
 mongoose
   .connect(db, {
     useNewUrlParser: true,
     useCreateIndex: true
   }) // Adding new mongo url parser
   .then(() => console.log("MongoDB Connected."))
-  .catch(err => console.log(err));
+  .catch((err: any) => console.log(err));
 
 // Use Routes
 app.use("/api/v1", require("./routes/api/v1"));
@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === "production") {
   // Set static folder
   app.use(express.static("client/build"));
 
-  app.get("*", (req, res) => {
+  app.get("*", (req: Request, res: Response) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
