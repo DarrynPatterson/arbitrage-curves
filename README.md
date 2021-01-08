@@ -24,6 +24,10 @@ npm run dev
 * [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) - JSON Web Tokens for node.js
 * [Mongoose](https://github.com/Automattic/mongoose) - MongoDB object modeling for node.js
 
-`code snippet`
+`code snippet
+second line
+`
 
-```block snippet
+```
+block snippet
+```
