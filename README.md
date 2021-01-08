@@ -30,4 +30,5 @@ second line
 
 ```
 block snippet
+second line
 ```
